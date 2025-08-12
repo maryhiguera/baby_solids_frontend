@@ -1,11 +1,23 @@
-export function FoodsShow({food}) {
+export function FoodsShow({ food }) {
   return (
     <div>
-      <p>Minimum age in months: {food.min_age_months}</p>
-      <p>Texture: {food.texture}</p>
-      <li>Ingredients: {food.ingredients}</li>
-      <p>Instructions: {food.instructions}</p>
-      <p>Allergic: {food.is_allergen}</p>
+      <ul className="list-group mb-3">
+        <li className="list-group-item">
+          <strong>Minimum age in months:</strong> {food.min_age_months}
+        </li>
+        <li className="list-group-item">
+          <strong>Texture:</strong> {food.texture}
+        </li>
+        <li className="list-group-item">
+          <strong>Ingredients:</strong> {food.ingredients.join(", ")}
+        </li>
+        <li className="list-group-item">
+          <strong>Instructions:</strong> {food.instructions}
+        </li>
+        <li className="list-group-item">
+          <strong>Allergenic:</strong> {food.is_allergen ? "Yes" : "No"}
+        </li>
+      </ul>
     </div>
-  )
+  );
 }

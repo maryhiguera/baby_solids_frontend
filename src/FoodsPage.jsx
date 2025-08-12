@@ -6,7 +6,6 @@ import {FoodsNew} from "./FoodsNew";
 import {Modal} from "./Modal";
 
 
-
 export function FoodsPage() {
   const [foods, setFoods] = useState([]);
   const [isFoodsShowVisible, setIsFoodsShowVisible] = useState(false);
@@ -39,7 +38,7 @@ export function FoodsPage() {
 
   return (
     <main>
-      <FoodsNew onCreate={handleCreate} />
+      {/* <FoodsNew onCreate={handleCreate} /> */}
       <FoodsIndex foods={foods} onShow={handleShow}/>
       <Modal show={isFoodsShowVisible} onClose={() => setIsFoodsShowVisible(false)}>
         <FoodsShow food={currentFood} />
