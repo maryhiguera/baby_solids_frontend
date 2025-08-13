@@ -31,7 +31,7 @@ export function BabyIndex({ babies, onShow }) {
               onClick={() => onShow(baby)}
               aria-label={`Show details for ${baby.name}`}
             >
-              Update
+              Edit
             </button>
           </div>
         ))}

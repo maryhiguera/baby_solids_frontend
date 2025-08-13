@@ -32,7 +32,7 @@ export function FoodLogIndex({ food_logs, onShow }) {
                   className="btn btn-sm btn-primary mt-auto align-self-start"
                   onClick={() => onShow(food_log)}
                 >
-                  Update
+                  Edit
                 </button>
               </div>
             </div>

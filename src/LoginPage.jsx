@@ -4,8 +4,9 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 
 export function LoginPage() {
   const [errors, setErrors] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useOutletContext();
+  const { setIsLoggedIn, setIsAdmin } = useOutletContext();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,6 +18,7 @@ export function LoginPage() {
         console.log(response.data);
         localStorage.setItem("email", response.data.email);
         setIsLoggedIn(true);
+        setIsAdmin(response.data.admin);
         event.target.reset();
         navigate("/");
       })
@@ -51,7 +53,26 @@ export function LoginPage() {
               <label htmlFor="password" className="form-label">
                 Password
               </label>
-              <input id="password" name="password" type="password" className="form-control" required />
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                required
+              />
+            </div>
+
+            <div className="form-check mb-4">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="showPasswordToggle"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              <label className="form-check-label" htmlFor="showPasswordToggle">
+                Show Password
+              </label>
             </div>
 
             <button type="submit" className="btn btn-primary w-100">

@@ -20,6 +20,17 @@ function Layout() {
   const [popupModal, setPopupModal] = useState(false);
   const [babyName, setBabyName] = useState("");
   const [babyBirthday, setBabyBirthday] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect (() => {
+    axios.get(`/me.json`).then((response) => {
+      setIsAdmin(response.data);
+      console.log(response.data);
+    })
+    .catch(() => {
+      setIsAdmin(false);
+    });
+  }, []);
 
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem("email"));
@@ -31,19 +42,23 @@ function Layout() {
       setBabyBirthday("");
       setPopupModal(false);
 
-      axios.get("/babies.json")
-        .then((response) => {
-          if (response.data.length === 0) {
-            setPopupModal(true);
-          }
-        })
-        .catch(console.error);
+      // Fetch babies only if NOT admin
+      if (!isAdmin) {
+        axios.get("/babies.json")
+          .then((response) => {
+            if (response.data.length === 0) {
+              setPopupModal(true);
+            }
+          })
+          .catch(console.error);
+      }
     } else {
       setBabyName("");
       setBabyBirthday("");
       setPopupModal(false);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, isAdmin]);
+
 
 
 
@@ -58,7 +73,7 @@ function Layout() {
   return (
     <div>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      <Outlet context={{ setIsLoggedIn }} />
+      <Outlet context={{ isAdmin, setIsLoggedIn, setIsAdmin }} />
       <Footer />
       <PopupModal show={popupModal} onClose={() => setPopupModal(false)}>
         <div className="p-4 text-center">
@@ -95,7 +110,6 @@ function Layout() {
           </button>
         </div>
       </PopupModal>
-
     </div>
   );
 }
